@@ -5,66 +5,72 @@ namespace ch_20_tictactoe
 {
     class Board
     {
-        private string[,] board = new string[3, 3] { {"_", "_", "_"},
-                                                    {"_", "_", "_"},
-                                                    {"_", "_", "_"} };
+        public State[,] boardState = null;
 
-        private string currentPlayer = "X";
-
-        public void PrintBoard()
+        public Board()
         {
-            Console.WriteLine();
-
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    if (j > 0) Console.Write($" | {board[i, j]}");
-                    else Console.Write($" {board[i, j]}");
-                }
-                if (i < board.GetLength(0) - 1) Console.WriteLine("\n-----------");
-                else Console.WriteLine();
-            }
-
-            Console.WriteLine();
+            boardState = new State[3, 3];
         }
 
+        private State currentPlayer = State.X;
+
+        /// <summary>
+        /// This method checks if anyone won.
+        /// </summary>
+        /// <returns></returns>
         public bool DidSomebodyWin()
         {
             return DidPlayerOWin() || DidPlayerXWin() || DidGameEndInDraw();
         }
 
+        /// <summary>
+        /// This method checks if player X won.
+        /// </summary>
+        /// <returns></returns>
         private bool DidPlayerXWin()
         {
-            return (board[0, 0] == "X" && board[0, 1] == "X" && board[0, 2] == "X") ||
-                (board[1, 0] == "X" && board[1, 1] == "X" && board[1, 2] == "X") ||
-                (board[2, 0] == "X" && board[2, 1] == "X" && board[2, 2] == "X") ||
-                (board[0, 0] == "X" && board[1, 1] == "X" && board[2, 2] == "X") ||
-                (board[0, 2] == "X" && board[1, 1] == "X" && board[2, 0] == "X") ||
-                (board[0, 0] == "X" && board[1, 0] == "X" && board[2, 0] == "X") ||
-                (board[0, 1] == "X" && board[1, 1] == "X" && board[2, 1] == "X") ||
-                (board[0, 2] == "X" && board[1, 2] == "X" && board[2, 2] == "X");
+            return (boardState[0, 0] == State.X && boardState[0, 1] == State.X && boardState[0, 2] == State.X) ||
+                (boardState[1, 0] == State.X && boardState[1, 1] == State.X && boardState[1, 2] == State.X) ||
+                (boardState[2, 0] == State.X && boardState[2, 1] == State.X && boardState[2, 2] == State.X) ||
+                (boardState[0, 0] == State.X && boardState[1, 1] == State.X && boardState[2, 2] == State.X) ||
+                (boardState[0, 2] == State.X && boardState[1, 1] == State.X && boardState[2, 0] == State.X) ||
+                (boardState[0, 0] == State.X && boardState[1, 0] == State.X && boardState[2, 0] == State.X) ||
+                (boardState[0, 1] == State.X && boardState[1, 1] == State.X && boardState[2, 1] == State.X) ||
+                (boardState[0, 2] == State.X && boardState[1, 2] == State.X && boardState[2, 2] == State.X);
         }
 
+        /// <summary>
+        /// This method checks if player O won.
+        /// </summary>
+        /// <returns></returns>
         private bool DidPlayerOWin()
         {
-            return (board[0, 0] == "O" && board[0, 1] == "O" && board[0, 2] == "O") ||
-                (board[1, 0] == "O" && board[1, 1] == "O" && board[1, 2] == "O") ||
-                (board[2, 0] == "O" && board[2, 1] == "O" && board[2, 2] == "O") ||
-                (board[0, 0] == "O" && board[1, 1] == "O" && board[2, 2] == "O") ||
-                (board[0, 2] == "O" && board[1, 1] == "O" && board[2, 0] == "O") ||
-                (board[0, 0] == "O" && board[1, 0] == "O" && board[2, 0] == "O") ||
-                (board[0, 1] == "O" && board[1, 1] == "O" && board[2, 1] == "O") ||
-                (board[0, 2] == "O" && board[1, 2] == "O" && board[2, 2] == "O");
+            return (boardState[0, 0] == State.O && boardState[0, 1] == State.O && boardState[0, 2] == State.O) ||
+                (boardState[1, 0] == State.O && boardState[1, 1] == State.O && boardState[1, 2] == State.O) ||
+                (boardState[2, 0] == State.O && boardState[2, 1] == State.O && boardState[2, 2] == State.O) ||
+                (boardState[0, 0] == State.O && boardState[1, 1] == State.O && boardState[2, 2] == State.O) ||
+                (boardState[0, 2] == State.O && boardState[1, 1] == State.O && boardState[2, 0] == State.O) ||
+                (boardState[0, 0] == State.O && boardState[1, 0] == State.O && boardState[2, 0] == State.O) ||
+                (boardState[0, 1] == State.O && boardState[1, 1] == State.O && boardState[2, 1] == State.O) ||
+                (boardState[0, 2] == State.O && boardState[1, 2] == State.O && boardState[2, 2] == State.O);
         }
 
+        /// <summary>
+        /// This method checks if game ended in a draw.
+        /// </summary>
+        /// <returns></returns>
         private bool DidGameEndInDraw()
         {
-            return (board[0, 0] != "_" && board[0, 1] != "_" && board[0, 2] != "_") &&
-                (board[1, 0] != "_" && board[1, 1] != "_" && board[1, 2] != "_") &&
-                (board[2, 0] != "_" && board[2, 1] != "_" && board[2, 2] != "_");
+            return (boardState[0, 0] != State.Empty && boardState[0, 1] != State.Empty && boardState[0, 2] != State.Empty) &&
+                (boardState[1, 0] != State.Empty && boardState[1, 1] != State.Empty && boardState[1, 2] != State.Empty) &&
+                (boardState[2, 0] != State.Empty && boardState[2, 1] != State.Empty && boardState[2, 2] != State.Empty);
         }
 
+        /// <summary>
+        /// This method attempts to place a sign on the board.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public string PlaceSign(string pos)
         {
             string message = "Placing a sign...";
@@ -72,103 +78,107 @@ namespace ch_20_tictactoe
             switch (pos)
             {
                 case "1":
-                    if (board[0, 0] != "_")
+                    if (boardState[0, 0] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[0, 0] = currentPlayer;
+                        boardState[0, 0] = currentPlayer;
                     }
                     break;
                 case "2":
-                    if (board[0, 1] != "_")
+                    if (boardState[0, 1] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[0, 1] = currentPlayer;
+                        boardState[0, 1] = currentPlayer;
                     }
                     break;
                 case "3":
-                    if (board[0, 2] != "_")
+                    if (boardState[0, 2] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[0, 2] = currentPlayer;
+                        boardState[0, 2] = currentPlayer;
                     }
                     break;
                 case "4":
-                    if (board[1, 0] != "_")
+                    if (boardState[1, 0] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[1, 0] = currentPlayer;
+                        boardState[1, 0] = currentPlayer;
                     }
                     break;
                 case "5":
-                    if (board[1, 1] != "_")
+                    if (boardState[1, 1] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[1, 1] = currentPlayer;
+                        boardState[1, 1] = currentPlayer;
                     }
                     break;
                 case "6":
-                    if (board[1, 2] != "_")
+                    if (boardState[1, 2] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[1, 2] = currentPlayer;
+                        boardState[1, 2] = currentPlayer;
                     }
                     break;
                 case "7":
-                    if (board[2, 0] != "_")
+                    if (boardState[2, 0] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[2, 0] = currentPlayer;
+                        boardState[2, 0] = currentPlayer;
                     }
                     break;
                 case "8":
-                    if (board[2, 1] != "_")
+                    if (boardState[2, 1] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[2, 1] = currentPlayer;
+                        boardState[2, 1] = currentPlayer;
                     }
                     break;
                 case "9":
-                    if (board[2, 2] != "_")
+                    if (boardState[2, 2] != State.Empty)
                     {
                         message = "This cell is full!";
                     }
                     else
                     {
-                        board[2, 2] = currentPlayer;
+                        boardState[2, 2] = currentPlayer;
                     }
                     break;
             }
             if (message != "This cell is full!")
             {
-                currentPlayer = currentPlayer == "X" ? "O" : "X";
+                currentPlayer = currentPlayer == State.X ? State.O : State.X;
             }
             return message;
         }
 
+        /// <summary>
+        /// This method formats the string with the winner of the game.
+        /// </summary>
+        /// <returns></returns>
         public string Winner()
         {
             if (DidPlayerOWin())
