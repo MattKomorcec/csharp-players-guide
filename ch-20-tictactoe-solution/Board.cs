@@ -4,7 +4,7 @@ namespace ch_20_tictactoe_solution
 {
     public class Board
     {
-        private State[,] state;
+        private readonly State[,] state;
         public State NextTurn { get; private set; }
 
         public Board()

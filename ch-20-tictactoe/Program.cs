@@ -27,6 +27,7 @@ namespace ch_20_tictactoe
 
             board.PrintBoard();
             Console.WriteLine(board.Winner());
+            Console.ReadKey();
         }
     }
 }
